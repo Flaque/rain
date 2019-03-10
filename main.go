@@ -62,8 +62,8 @@ func renderText() {
 func renderGround() {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 	w, h := termbox.Size()
-	for y := 0; y < h; y++ {
-		for x := 0; x < w; x++ {
+	for y := 1; y < h-2; y++ {
+		for x := 1; x < w-3; x++ {
 			n := noise(x, y)
 			switch {
 			case n < 0:
@@ -131,8 +131,8 @@ func renderRain(drops []drop) {
 func newDrop() drop {
 	w, h := termbox.Size()
 	return drop{
-		x:   rand.Intn(w),
-		y:   rand.Intn(h),
+		x:   rand.Intn(w-3) + 2,
+		y:   rand.Intn(h-2) + 2,
 		age: 0,
 	}
 }
@@ -188,7 +188,7 @@ func main() {
 			renderGround()
 			renderRain(drops)
 			drops = updateRain(drops)
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(50 * time.Millisecond)
 		}
 	}
 }
